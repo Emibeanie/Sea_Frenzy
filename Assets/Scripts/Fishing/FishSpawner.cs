@@ -9,10 +9,15 @@ public class FishSpawner : MonoBehaviour
     public float spawnInterval = 2.0f;
 
     private float _fishCount;
-    private float _fishSpawnLimit = 24f;
+    private float _fishSpawnLimit;
+
+    private const float GridCellSize = 100f;
+    private Dictionary<Vector2Int, List<RectTransform>> gridCells;
 
     void Start()
     {
+        gridCells = new Dictionary<Vector2Int, List<RectTransform>>();
+        _fishSpawnLimit = Random.Range(18f, 28f);
         InvokeRepeating("SpawnFish", 0, spawnInterval);
     }
 
@@ -24,20 +29,98 @@ public class FishSpawner : MonoBehaviour
             fish.transform.SetParent(panelRectTransform, false);
 
             RectTransform fishRectTransform = fish.GetComponent<RectTransform>();
-            Debug.Log(panelRectTransform.rect.width);
-            Debug.Log(panelRectTransform.rect.height);
 
             float width = panelRectTransform.rect.width - fishRectTransform.rect.width;
             float height = panelRectTransform.rect.height - fishRectTransform.rect.height;
-            float x = Random.Range(-width / 2, width / 2);
-            float y = Random.Range(-height / 2, height / 2);
-            fishRectTransform.anchoredPosition = new Vector2(x, y);
+
+            Vector2 position;
+            bool positionValid;
+
+            do
+            {
+                float x = Random.Range(-width / 2, width / 2);
+                float y = Random.Range(-height / 2, height / 2);
+                position = new Vector2(x, y);
+
+                positionValid = true;
+                Vector2Int gridPos = GetGridPosition(position);
+
+                foreach (var offset in GetNeighborOffsets())
+                {
+                    Vector2Int neighborCell = gridPos + offset;
+                    if (gridCells.ContainsKey(neighborCell))
+                    {
+                        foreach (var otherRect in gridCells[neighborCell])
+                        {
+                            if (RectOverlaps(otherRect, position, fishRectTransform.rect.size))
+                            {
+                                positionValid = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!positionValid) break;
+                }
+            } while (!positionValid);
+
+            fishRectTransform.anchoredPosition = position;
+            RegisterFishPosition(fishRectTransform);
 
             Debug.Log("Fish spawned at: " + fishRectTransform.anchoredPosition);
             _fishCount++;
         }
     }
+
+    Vector2Int GetGridPosition(Vector2 position)
+    {
+        return new Vector2Int(
+            Mathf.FloorToInt(position.x / GridCellSize),
+            Mathf.FloorToInt(position.y / GridCellSize)
+        );
+    }
+
+    IEnumerable<Vector2Int> GetNeighborOffsets()
+    {
+        yield return new Vector2Int(0, 0);
+        yield return new Vector2Int(-1, 0);
+        yield return new Vector2Int(1, 0);
+        yield return new Vector2Int(0, -1);
+        yield return new Vector2Int(0, 1);
+        yield return new Vector2Int(-1, -1);
+        yield return new Vector2Int(-1, 1);
+        yield return new Vector2Int(1, -1);
+        yield return new Vector2Int(1, 1);
+    }
+
+    void RegisterFishPosition(RectTransform fishRect)
+    {
+        Vector2Int gridPos = GetGridPosition(fishRect.anchoredPosition);
+
+        if (!gridCells.ContainsKey(gridPos))
+        {
+            gridCells[gridPos] = new List<RectTransform>();
+        }
+
+        gridCells[gridPos].Add(fishRect);
+    }
+
+    bool RectOverlaps(RectTransform otherRect, Vector2 newPos, Vector2 size)
+    {
+        Vector2 minNew = newPos - size / 2;
+        Vector2 maxNew = newPos + size / 2;
+
+        Vector3[] otherCorners = new Vector3[4];
+        otherRect.GetWorldCorners(otherCorners);
+
+        for (int i = 0; i < 4; i++)
+        {
+            otherCorners[i] = panelRectTransform.InverseTransformPoint(otherCorners[i]);
+        }
+
+        Vector2 minOther = new Vector2(otherCorners[0].x, otherCorners[0].y);
+        Vector2 maxOther = new Vector2(otherCorners[2].x, otherCorners[2].y);
+
+        return minNew.x < maxOther.x && maxNew.x > minOther.x && minNew.y < maxOther.y && maxNew.y > minOther.y;
+    }
 }
-
-
-

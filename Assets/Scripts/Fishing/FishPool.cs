@@ -13,7 +13,7 @@ public class FishPool : MonoBehaviour
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject fish = Instantiate(fishPrefab, transform);
+            GameObject fish = Instantiate(fishPrefab,transform);
             fish.SetActive(false);
             fishPool.Add(fish);
         }
