@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class FishBehavior : MonoBehaviour
 {
-    private Button button;
+    private Button fishButton;
 
     void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnFishClicked);
+        fishButton = GetComponent<Button>();
+        fishButton.onClick.AddListener(OnFishClicked);
     }
 
     private void OnFishClicked()
     {
-        FishGameManager.Instance.AddFish();
+        FishManager.Instance.AddFish();
         gameObject.SetActive(false);
     }
 }

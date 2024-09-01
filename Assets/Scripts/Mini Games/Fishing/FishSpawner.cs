@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class FishSpawner : MonoBehaviour
 {
-    public FishPool fishPool;
-    public RectTransform panelRectTransform;
-    public float spawnInterval = 2.0f;
+    [SerializeField] private FishPool fishPool;
+    [SerializeField] private RectTransform panelRectTransform;
+    [SerializeField] private float spawnInterval = 2.0f;
 
-    private float _fishCount;
-    private float _fishSpawnLimit;
+    public int FishSpawnLimit { get => _fishSpawnLimit; }
 
-    private const float GridCellSize = 100f;
-    private Dictionary<Vector2Int, List<RectTransform>> gridCells;
+    private int _fishSpawnLimit;
+    private int _fishCount;
+    private const float _gridCellSize = 100f;
+    private Dictionary<Vector2Int, List<RectTransform>> _gridCells;
 
     void Start()
     {
-        gridCells = new Dictionary<Vector2Int, List<RectTransform>>();
-        _fishSpawnLimit = Random.Range(18f, 28f);
+        _gridCells = new Dictionary<Vector2Int, List<RectTransform>>();
+        _fishSpawnLimit = Random.Range(18, 28);
         InvokeRepeating("SpawnFish", 0, spawnInterval);
     }
 
@@ -48,9 +49,9 @@ public class FishSpawner : MonoBehaviour
                 foreach (var offset in GetNeighborOffsets())
                 {
                     Vector2Int neighborCell = gridPos + offset;
-                    if (gridCells.ContainsKey(neighborCell))
+                    if (_gridCells.ContainsKey(neighborCell))
                     {
-                        foreach (var otherRect in gridCells[neighborCell])
+                        foreach (var otherRect in _gridCells[neighborCell])
                         {
                             if (RectOverlaps(otherRect, position, fishRectTransform.rect.size))
                             {
@@ -75,8 +76,8 @@ public class FishSpawner : MonoBehaviour
     Vector2Int GetGridPosition(Vector2 position)
     {
         return new Vector2Int(
-            Mathf.FloorToInt(position.x / GridCellSize),
-            Mathf.FloorToInt(position.y / GridCellSize)
+            Mathf.FloorToInt(position.x / _gridCellSize),
+            Mathf.FloorToInt(position.y / _gridCellSize)
         );
     }
 
@@ -97,12 +98,12 @@ public class FishSpawner : MonoBehaviour
     {
         Vector2Int gridPos = GetGridPosition(fishRect.anchoredPosition);
 
-        if (!gridCells.ContainsKey(gridPos))
+        if (!_gridCells.ContainsKey(gridPos))
         {
-            gridCells[gridPos] = new List<RectTransform>();
+            _gridCells[gridPos] = new List<RectTransform>();
         }
 
-        gridCells[gridPos].Add(fishRect);
+        _gridCells[gridPos].Add(fishRect);
     }
 
     bool RectOverlaps(RectTransform otherRect, Vector2 newPos, Vector2 size)
