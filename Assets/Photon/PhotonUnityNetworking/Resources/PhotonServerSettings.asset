@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 86e34281-3833-4ac5-a5c6-7ac2a99c897d
+    AppIdRealtime: 38174303-13bf-4556-9c9b-cb2e1a863436
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: eu
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -36,12 +36,15 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
+  - AddTeamScore
+  - InitTeamScore
+  - OnStartGame
+  - StartGame
+  - EndGame
+  - ChangeCharacterColor
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - ChangeCharacterColor
-  - EndGame
-  - StartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

@@ -25,7 +25,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _uiManager = UIManager.Instance;
         _uiManager.ToggleConnectingMassage(true);
         
-        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
+        if (PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
         {
             PhotonNetwork.JoinLobby(mainLobby); // Join the lobby if connected but not in the lobby
             _uiManager.ToggleNickNamePanel(false);
@@ -125,18 +125,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _uiManager.UpdateLobbyRoomListUI(_cachedRoomList);
     }
 
-    public void CreateRoom(string roomNickname, int maxPlayers)
+    public void CreateRoom(string roomNickname, int maxPlayers, float miniGameSpawnTime, float gameTimeLimit)
     {
         if (PhotonNetwork.IsConnectedAndReady)
         {
             RoomOptions roomOptions = new RoomOptions
             {
+                PublishUserId = true,
                 MaxPlayers = (byte)maxPlayers,
-                PlayerTtl = 30000,
+                PlayerTtl = -1,
                 EmptyRoomTtl = 30000,
                 IsVisible = true,
+                CleanupCacheOnLeave = false
             };
+
             PlayerPrefs.SetString("LastRoomNickName", roomNickname);
+            PlayerPrefs.SetFloat("MiniGameSpawnTime", miniGameSpawnTime);
+            PlayerPrefs.SetFloat("GameTimeLimit", gameTimeLimit);
             PhotonNetwork.CreateRoom(roomNickname, roomOptions, mainLobby);
         }
     }
