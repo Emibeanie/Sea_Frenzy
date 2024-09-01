@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fishing hook_0: -5086554039098865260
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

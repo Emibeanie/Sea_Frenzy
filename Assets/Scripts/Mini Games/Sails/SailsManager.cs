@@ -12,8 +12,6 @@ public class SailsManager : MonoBehaviour
 
         upProgressBar.value = 0f;
         downProgressBar.value = 1f;
-
-
     }
     public void UpSails()
     {
