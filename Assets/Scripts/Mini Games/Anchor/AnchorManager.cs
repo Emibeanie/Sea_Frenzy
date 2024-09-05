@@ -10,6 +10,12 @@ public class AnchorManager : MonoBehaviour
     [SerializeField] GameObject upPanel;
     [SerializeField] GameObject downPanel;
 
+    private void Start()
+    {
+        upAnchor.interactable = false;
+        downAnchor.interactable = false;
+
+    }
     void Update()
     {
         DownAnchorWhileSpacePressed();

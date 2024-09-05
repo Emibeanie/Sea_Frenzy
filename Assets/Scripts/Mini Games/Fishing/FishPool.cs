@@ -29,9 +29,8 @@ public class FishPool : MonoBehaviour
             }
         }
 
-        GameObject newFish = Instantiate(fishPrefab, transform);
-        fishPool.Add(newFish);
-        return newFish;
+        Debug.LogError("No available fish in the pool, limit reached.");
+        return null;
     }
 
 }
