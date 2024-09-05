@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MouseImageManager : MonoBehaviour
+public class MiniGamesManager : MonoBehaviour
 {
     [SerializeField] GameObject cannonCrosshair;
     [SerializeField] GameObject fishingHook;

@@ -27,6 +27,13 @@ public class FishSpawner : MonoBehaviour
         while (_fishCount < _fishSpawnLimit)
         {
             GameObject fish = fishPool.GetFish();
+
+            if (fish == null)
+            {
+                Debug.LogError("FishPool returned null even after attempting to instantiate new fish. Check pool size and prefab assignment.");
+                break;
+            }
+
             fish.transform.SetParent(panelRectTransform, false);
 
             RectTransform fishRectTransform = fish.GetComponent<RectTransform>();
@@ -72,6 +79,7 @@ public class FishSpawner : MonoBehaviour
             _fishCount++;
         }
     }
+
 
     Vector2Int GetGridPosition(Vector2 position)
     {

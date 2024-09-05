@@ -1,18 +1,36 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CannonManager : MonoBehaviour
 {
-    private Button _rockButton;
+    [SerializeField] GameObject cannonPanel;
+    [SerializeField] GameObject closeButton;
+    [SerializeField] GameObject[] rocks;
 
-    void Start()
+    void Update()
     {
-        _rockButton = GetComponent<Button>();
-        _rockButton.onClick.AddListener(OnRockClicked);
+        CheckRocksAndPanel();
+    }
+    private void CheckRocksAndPanel()
+    {
+        if (cannonPanel.activeSelf)
+        {
+            bool allRocksInactive = true;
+            foreach (GameObject rock in rocks)
+            {
+                if (rock.activeSelf)
+                {
+                    allRocksInactive = false;
+                    break;
+                }
+            }
+
+            if (allRocksInactive)
+                closeButton.SetActive(true);
+        }
     }
 
-    private void OnRockClicked()
+    public void CloseButton()
     {
-        gameObject.SetActive(false);
+        cannonPanel.SetActive(false);
     }
 }

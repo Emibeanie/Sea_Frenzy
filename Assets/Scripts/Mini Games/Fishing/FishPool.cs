@@ -28,6 +28,10 @@ public class FishPool : MonoBehaviour
                 return fish;
             }
         }
-        return null;
+
+        GameObject newFish = Instantiate(fishPrefab, transform);
+        fishPool.Add(newFish);
+        return newFish;
     }
+
 }
