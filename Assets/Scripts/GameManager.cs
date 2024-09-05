@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             _roomMenu.ToggleStartButton(true);
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 25000;
         }
 
         if (gameHasStarted)
@@ -109,7 +110,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (tempTimer <= 0)
             {
                 ship.SetActive(false);
-                fishCollectedText.text = $"Fish Collected: {teamScore}";
+                fishCollectedText.text = $"Score Collected: {teamScore}";
                 endGamePanel.SetActive(true);
 
                 if (PhotonNetwork.IsMasterClient)
