@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using WebSocketSharp;
 
 public class UIManager : MonoBehaviour
@@ -28,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject createRoomPanel;
     [SerializeField] TMP_InputField roomNickname;
     [SerializeField] TMP_InputField maxPlayers;
+    [SerializeField] TMP_InputField miniGameTimer;
+    [SerializeField] TMP_InputField gameTimeLimitField;
     [SerializeField] TextMeshProUGUI errorMassage;
 
     [Header("Choose Nickname panel")]
@@ -56,7 +57,6 @@ public class UIManager : MonoBehaviour
         {
             rejoinRoomButton.SetActive(true);
         }
-        
     }
 
     public void OnClickEnterLobby()
@@ -90,8 +90,36 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        if(maxPlayersInt > 6 || maxPlayers.text.IsNullOrEmpty())
+        {
+            ToggleErrorMassageRoomCreation("Max Players is 6", true);
+            return;
+        }
+
+        if(float.Parse(miniGameTimer.text) < 5 || miniGameTimer.text.IsNullOrEmpty())
+        {
+            ToggleErrorMassageRoomCreation("Minimum 5 seconds for spawn", true);
+            return;
+        }
+        
+        if(float.Parse(gameTimeLimitField.text) < 5 || miniGameTimer.text.IsNullOrEmpty())
+        {
+            ToggleErrorMassageRoomCreation("Minimum 5 minutes of game time", true);
+            return;
+        }
+
+        if (float.Parse(gameTimeLimitField.text) > 15 || miniGameTimer.text.IsNullOrEmpty())
+        {
+            ToggleErrorMassageRoomCreation("Maximum of 15 minutes of game time", true);
+            return;
+        }
+
         ToggleErrorMassageRoomCreation("", false);
-        _networkManager.CreateRoom(roomNickname.text, maxPlayersInt);
+
+        float spawnTimer = float.Parse(miniGameTimer.text);
+        float gameTimeLimit = float.Parse(gameTimeLimitField.text);
+
+        _networkManager.CreateRoom(roomNickname.text, maxPlayersInt, spawnTimer, gameTimeLimit);
     }
 
     public void OnClickQuit()
