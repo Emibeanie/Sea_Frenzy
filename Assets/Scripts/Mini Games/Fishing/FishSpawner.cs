@@ -14,6 +14,8 @@ public class FishSpawner : MonoBehaviour
     private int _fishCount;
     private const float _gridCellSize = 100f;
     private Dictionary<Vector2Int, List<RectTransform>> _gridCells;
+    private int iterationLimit = 100;
+    private int iterationCount = 0;
 
     void Start()
     {
@@ -70,6 +72,14 @@ public class FishSpawner : MonoBehaviour
 
                     if (!positionValid) break;
                 }
+
+                iterationCount++;
+                if (iterationCount > iterationLimit)
+                {
+                    Debug.LogError("Positioning loop exceeded iteration limit, breaking.");
+                    break;
+                }
+
             } while (!positionValid);
 
             fishRectTransform.anchoredPosition = position;
