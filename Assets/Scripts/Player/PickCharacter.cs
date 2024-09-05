@@ -34,7 +34,6 @@ public class PickCharacter : MonoBehaviourPunCallbacks
        
     }
 
-
     public void OnCharacterPicked(int buttonID)
     {
        
@@ -56,7 +55,7 @@ public class PickCharacter : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
 
 
-        SpawnPlayer();
+        SpawnPlayer(PickResourcePlayerName(buttonID));
 
         pickCharacterPanel.SetActive(false);
         GameManager.Instance.ship.SetActive(true);
@@ -86,15 +85,36 @@ public class PickCharacter : MonoBehaviourPunCallbacks
 
     }
 
-    void SpawnPlayer()
+
+    string PickResourcePlayerName(int characterIndex)
+    {
+        string resourceName = "";
+
+        switch (characterIndex)
+        {
+            case 1: resourceName = "Captain"; break;
+
+            case 2: resourceName = "Fisher"; break;
+
+            case 3: case 4: resourceName = "Canon"; break;
+
+            case 5: resourceName = "Sails"; break;
+
+            case 6: resourceName = "Anchor"; break;
+        }
+
+        Debug.Log("Resource Name : " + resourceName);
+        return resourceName;
+    }
+    void SpawnPlayer(string resourcePlayerName)
     {
         int randomSpawnIndex = UnityEngine.Random.Range(0, miniGameSpawner.spawnPoints.Length);
 
-        GameObject myPlayer = PhotonNetwork.Instantiate("Player", miniGameSpawner.spawnPoints[randomSpawnIndex].position, Quaternion.identity);
+        GameObject myPlayer = PhotonNetwork.Instantiate(resourcePlayerName, miniGameSpawner.spawnPoints[randomSpawnIndex].position, Quaternion.identity);
         myPlayer.transform.SetParent(GameManager.Instance.ship.transform, true); 
         PlayerSetup playerSetup = myPlayer.GetComponent<PlayerSetup>();
 
-        playerSetup.InitializePlayer(myPlayer ,PhotonNetwork.LocalPlayer.NickName);
+        playerSetup.InitializePlayer(myPlayer ,PhotonNetwork.LocalPlayer.NickName, resourcePlayerName);
 
         PlayerPrefs.SetInt("playerViewID", playerSetup.PlayerViewID);
 

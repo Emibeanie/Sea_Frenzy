@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerSetup : MonoBehaviourPunCallbacks
 {
     [SerializeField] PlayerMovment playerMovment;
-    [SerializeField] SpriteRenderer spriteRenderer;
 
     public GameObject PlayerObject { get; private set; }
 
     public int PlayerViewID { get; private set; }
+    public string PlayerMiniID;
 
 
     private void Update()
@@ -17,11 +17,12 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         CheckEscapeGame();
     }
 
-    public void InitializePlayer(GameObject playerObj, string playerName)
+    public void InitializePlayer(GameObject playerObj, string playerName, string miniGameID)
     {
         PlayerObject = playerObj;
         gameObject.name = playerName;
         PlayerViewID = photonView.ViewID;
+        PlayerMiniID = miniGameID;
     }
 
     public void ActiveOwnerControl()
@@ -29,7 +30,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         playerMovment.enabled = true;
     }
 
-    public void DisablePlayerOwner()
+    public void DisablePlayerMovment()
     {
         playerMovment.enabled = false;
     }
@@ -38,7 +39,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            DisablePlayerOwner();
+            DisablePlayerMovment();
             GameManager.Instance.EscapeRoom();
         }
     }
