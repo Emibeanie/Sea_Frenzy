@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 1579318505548716756}
   - component: {fileID: 2587096266221676579}
   - component: {fileID: -9029775409088525068}
+  - component: {fileID: 8090682526830345715}
   m_Layer: 0
   m_Name: Captain
   m_TagString: Player
@@ -345,6 +346,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2605434032175287422}
   - {fileID: 2587096266221676579}
+  - {fileID: -9029775409088525068}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -450,6 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
+  animator: {fileID: 8090682526830345715}
 --- !u!114 &2587096266221676579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,8 +483,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isWalking
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!95 &8090682526830345715
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2521328204374197957}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50c2af5a0cca86142805fcd4556d43f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5207173438560279469
 GameObject:
   m_ObjectHideFlags: 0

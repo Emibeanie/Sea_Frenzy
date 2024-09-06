@@ -1148,6 +1148,7 @@ GameObject:
   - component: {fileID: 7973627162617309699}
   - component: {fileID: -2622736410154345674}
   - component: {fileID: 2926132888509266841}
+  - component: {fileID: 8907432505709243618}
   m_Layer: 0
   m_Name: Fisher
   m_TagString: Player
@@ -1218,6 +1219,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2085057924732551610}
   - {fileID: -2622736410154345674}
+  - {fileID: 2926132888509266841}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1323,6 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
+  animator: {fileID: 8907432505709243618}
 --- !u!114 &-2622736410154345674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,4 +1357,28 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!95 &8907432505709243618
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214504382289809360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 375dbeefe6cccc343801ff5e98eaec68, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
