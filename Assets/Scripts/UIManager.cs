@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using WebSocketSharp;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -196,6 +197,19 @@ public class UIManager : MonoBehaviour
             RoomInfo roomInfo = Instantiate(roomInfoPrefab, roomListParentObject);
             roomInfo.SetRoomInfo(room.Value.Name, room.Value.PlayerCount, room.Value.MaxPlayers);
         }
+    }
+   
+    public void OnJoinStartedGame()
+    {
+        Debug.Log("Join Started Game button clicked");
+
+        NetworkManager.Instance.JoinRandomRoom(true);
+    }
+    public void OnJoinNotStartedGame()
+    {
+        Debug.Log("Join Not Started Game button clicked");
+
+        NetworkManager.Instance.JoinRandomRoom(false);
     }
 
     private void OnApplicationQuit()

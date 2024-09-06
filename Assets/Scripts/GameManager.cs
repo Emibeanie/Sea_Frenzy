@@ -189,6 +189,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void SetGameStart(bool status)
     {
         gameHasStarted = status;
+
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable
+    {
+        {GAME_HAS_STARTED, gameHasStarted }
+    };
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
     }
 
     public void ToggleCaptainBoard(bool status)

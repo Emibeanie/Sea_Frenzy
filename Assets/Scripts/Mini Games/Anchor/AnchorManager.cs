@@ -15,6 +15,9 @@ public class AnchorManager : MonoBehaviour
         upAnchor.interactable = false;
         downAnchor.interactable = false;
 
+        upAnchor.value = 0;
+        downAnchor.value = 1;
+
     }
     void Update()
     {
