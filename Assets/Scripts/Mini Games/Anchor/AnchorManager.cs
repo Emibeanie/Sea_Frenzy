@@ -10,15 +10,21 @@ public class AnchorManager : MonoBehaviour
     [SerializeField] GameObject upPanel;
     [SerializeField] GameObject downPanel;
 
-    private void Start()
+    private void OnEnable()
+    {
+        ResetMiniGame();
+    }
+    private void ResetMiniGame()
     {
         upAnchor.interactable = false;
         downAnchor.interactable = false;
+        upAnchor.value = 1;
+        downAnchor.value = 0;
 
-        upAnchor.value = 0;
-        downAnchor.value = 1;
-
+        upCloseButton.SetActive(false);
+        downCloseButton.SetActive(false);
     }
+
     void Update()
     {
         DownAnchorWhileSpacePressed();

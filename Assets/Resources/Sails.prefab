@@ -625,6 +625,7 @@ GameObject:
   - component: {fileID: 5491342104555568270}
   - component: {fileID: 1891226505058144960}
   - component: {fileID: -7966241183052453237}
+  - component: {fileID: 8424130753291557000}
   m_Layer: 0
   m_Name: Sails
   m_TagString: Player
@@ -813,6 +814,22 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8424130753291557000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4586465346553867765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
 --- !u!1 &8219460165868152670
 GameObject:
   m_ObjectHideFlags: 0

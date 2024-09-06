@@ -3,10 +3,14 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
+
+    [SerializeField] TextMeshProUGUI lobbyErrorMessage;
+
     private Dictionary<string, Photon.Realtime.RoomInfo> _cachedRoomList = new();
 
     UIManager _uiManager;
@@ -112,6 +116,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             else
             {
+
                 _cachedRoomList[room.Name] = room;
             }
         }
@@ -151,18 +156,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         foreach (var roomInfo in _cachedRoomList.Values)
         {
-            if (roomInfo.CustomProperties.ContainsKey(GameManager.GAME_HAS_STARTED))
+            if (roomInfo.PlayerCount < roomInfo.MaxPlayers)
             {
-                bool gameHasStarted = (bool)roomInfo.CustomProperties[GameManager.GAME_HAS_STARTED];
-
-                if (joinOngoingGame && gameHasStarted)
-                {
-                    suitableRooms.Add(roomInfo);
-                }
-                else if (!joinOngoingGame && !gameHasStarted)
-                {
-                    suitableRooms.Add(roomInfo);
-                }
+                suitableRooms.Add(roomInfo);
             }
         }
 
@@ -173,7 +169,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("No suitable rooms found.");
+            lobbyErrorMessage.gameObject.SetActive(true);
+            lobbyErrorMessage.text = "No suitable rooms found";
         }
     }
 }

@@ -4,15 +4,31 @@ using UnityEngine.UI;
 
 public class FishManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text fishCounterText;
-    [SerializeField] private FishSpawner fishSpawner;
-    [SerializeField] private GameObject fishingPanel;
+    [SerializeField] TMP_Text fishCounterText;
+    [SerializeField] FishSpawner fishSpawner;
+    [SerializeField] FishPool fishPool;
+    [SerializeField] GameObject fishingPanel;
     [SerializeField] GameObject closeButton;
 
     public static FishManager Instance { get; private set; }
 
     private int _fishCount = 0;
 
+    private void OnEnable()
+    {
+        ResetMiniGame();
+    }
+
+    private void ResetMiniGame()
+    {
+        _fishCount = 0;
+        fishCounterText.text = $"Fish Caught: {_fishCount}/{fishSpawner.FishSpawnLimit}";
+
+        fishPool.ResetPool();
+        fishSpawner.ResetSpawner();
+
+        closeButton.SetActive(false);
+    }
     private void Awake()
     {
         Instance = this;

@@ -552,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishCounterText: {fileID: 7223491941261858245}
   fishSpawner: {fileID: 4839539884470625646}
+  fishPool: {fileID: 5128379110331465838}
   fishingPanel: {fileID: 7769880807926088886}
   closeButton: {fileID: 657050877359539527}
 --- !u!114 &4839539884470625646

@@ -5,10 +5,14 @@ public class CannonManager : MonoBehaviour
     [SerializeField] GameObject cannonPanel;
     [SerializeField] GameObject closeButton;
     [SerializeField] GameObject[] rocks;
-
-    void Update()
+    private void OnEnable()
+    {
+        ResetMiniGame();
+    }
+    private void ResetMiniGame()
     {
         CheckRocksAndPanel();
+        closeButton.SetActive(false);
     }
     private void CheckRocksAndPanel()
     {

@@ -7,7 +7,11 @@ public class FishPool : MonoBehaviour
     public int poolSize = 6;
     private List<GameObject> fishPool;
 
-    void Start()
+    private void OnEnable()
+    {
+        InitializePool();
+    }
+    void InitializePool()
     {
         fishPool = new List<GameObject>();
 
@@ -32,5 +36,11 @@ public class FishPool : MonoBehaviour
         Debug.LogError("No available fish in the pool, limit reached.");
         return null;
     }
-
+    public void ResetPool()
+    {
+        foreach (var fish in fishPool)
+        {
+            fish.SetActive(false);
+        }
+    }
 }

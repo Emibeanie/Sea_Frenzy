@@ -9,7 +9,8 @@ public class SailsManager : MonoBehaviour
     [SerializeField] GameObject downCloseButton;
     [SerializeField] GameObject upPanel;
     [SerializeField] GameObject downPanel;
-    void Start()
+
+    void OnEnable()
     {
         upProgressBar.interactable = false;
         downProgressBar.interactable = false;

@@ -199,17 +199,9 @@ public class UIManager : MonoBehaviour
         }
     }
    
-    public void OnJoinStartedGame()
+    public void OnJoinRandomRoom()
     {
-        Debug.Log("Join Started Game button clicked");
-
         NetworkManager.Instance.JoinRandomRoom(true);
-    }
-    public void OnJoinNotStartedGame()
-    {
-        Debug.Log("Join Not Started Game button clicked");
-
-        NetworkManager.Instance.JoinRandomRoom(false);
     }
 
     private void OnApplicationQuit()

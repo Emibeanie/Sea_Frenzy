@@ -1717,7 +1717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &746102233
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3464,6 +3464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishCounterText: {fileID: 139011153}
   fishSpawner: {fileID: 1225881240}
+  fishPool: {fileID: 1225881239}
   fishingPanel: {fileID: 314914361}
   closeButton: {fileID: 797378463}
 --- !u!1 &1236656649
@@ -5202,7 +5203,7 @@ RectTransform:
   m_Father: {fileID: 164796253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -5}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
