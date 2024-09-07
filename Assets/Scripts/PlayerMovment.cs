@@ -1,7 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 
-
 public class PlayerMovment : MonoBehaviourPun
 {
     [SerializeField] float moveSpeed = 2f;
@@ -36,6 +35,8 @@ public class PlayerMovment : MonoBehaviourPun
             playerData.positionX = transform.position.x;
             playerData.positionY = transform.position.y;
             playerData.positionZ = transform.position.z;
+
+            photonView.RPC("UpdatePlayerDataRPC", RpcTarget.Others, playerData.positionX, playerData.positionY, playerData.positionZ, horizontal != 0 || vertical != 0);
         }
     }
 
@@ -54,6 +55,13 @@ public class PlayerMovment : MonoBehaviourPun
         animator.SetBool("isWalking", isWalking);
     }
 
+    [PunRPC]
+    void UpdatePlayerDataRPC(float posX, float posY, float posZ, bool isWalking)
+    {
+        transform.position = new Vector3(posX, posY, posZ);
+        animator.SetBool("isWalking", isWalking);
+    }
+
     public void SavePlayerData()
     {
         string jsonData = JsonUtility.ToJson(playerData);
@@ -67,8 +75,6 @@ public class PlayerMovment : MonoBehaviourPun
         {
             string jsonData = PlayerPrefs.GetString("PlayerData");
             playerData = JsonUtility.FromJson<PlayerData>(jsonData);
-
-            //restore player position and state
             transform.position = new Vector3(playerData.positionX, playerData.positionY, playerData.positionZ);
         }
     }
