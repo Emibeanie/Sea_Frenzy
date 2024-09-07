@@ -251,6 +251,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36962454}
   m_CullTransparentMesh: 1
+--- !u!1 &42149277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 42149278}
+  - component: {fileID: 42149279}
+  m_Layer: 5
+  m_Name: == Script ==
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &42149278
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42149277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 746102233}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &42149279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42149277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e42b393fd15a04c9d01b5c23ac140f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorSlider: {fileID: 1670983302}
+  closeButton: {fileID: 295243110}
+  panel: {fileID: 746102232}
 --- !u!1 &113957679
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,8 +911,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543253}
-        m_TargetAssemblyTypeName: AnchorManager, Assembly-CSharp
+      - m_Target: {fileID: 42149279}
+        m_TargetAssemblyTypeName: UpAnchorManager, Assembly-CSharp
         m_MethodName: CloseButton
         m_Mode: 1
         m_Arguments:
@@ -927,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &314914362
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1299,6 +1350,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609405530}
   m_CullTransparentMesh: 1
+--- !u!1 &636614777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636614778}
+  - component: {fileID: 636614779}
+  m_Layer: 5
+  m_Name: == Script ==
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &636614778
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636614777}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1212225696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &636614779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636614777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fffbe2a1ba94d84199fc2cf47ca8da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sailSlider: {fileID: 1737081357}
+  closeButton: {fileID: 1222076410}
+  panel: {fileID: 1212225695}
 --- !u!1 &666356644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1835,7 @@ RectTransform:
   - {fileID: 822973651}
   - {fileID: 1670983301}
   - {fileID: 295243111}
+  - {fileID: 42149278}
   m_Father: {fileID: 1887758853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -2333,6 +2436,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855054994}
   m_CullTransparentMesh: 1
+--- !u!1 &860680263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 860680264}
+  - component: {fileID: 860680265}
+  m_Layer: 5
+  m_Name: == Script ==
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &860680264
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860680263}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1724057683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &860680265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860680263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112dc9525a6572643bfc6bafb98bd789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sailSlider: {fileID: 1619388591}
+  closeButton: {fileID: 941663478}
+  panel: {fileID: 1724057682}
 --- !u!1 &877326166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,9 +2703,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543251}
-        m_TargetAssemblyTypeName: SailsManager, Assembly-CSharp
-        m_MethodName: closeButton
+      - m_Target: {fileID: 860680265}
+        m_TargetAssemblyTypeName: UpSailsManager, Assembly-CSharp
+        m_MethodName: CloseButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3205,6 +3359,7 @@ RectTransform:
   - {fileID: 1534628958}
   - {fileID: 1737081356}
   - {fileID: 1222076411}
+  - {fileID: 636614778}
   m_Father: {fileID: 1887758853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -3333,9 +3488,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543251}
-        m_TargetAssemblyTypeName: SailsManager, Assembly-CSharp
-        m_MethodName: closeButton
+      - m_Target: {fileID: 636614779}
+        m_TargetAssemblyTypeName: DownSailsManager, Assembly-CSharp
+        m_MethodName: CloseButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3464,6 +3619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishCounterText: {fileID: 139011153}
   fishSpawner: {fileID: 1225881240}
+  fishPool: {fileID: 1225881239}
   fishingPanel: {fileID: 314914361}
   closeButton: {fileID: 797378463}
 --- !u!1 &1236656649
@@ -3752,6 +3908,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342216734}
   m_CullTransparentMesh: 1
+--- !u!1 &1348332418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348332419}
+  - component: {fileID: 1348332420}
+  m_Layer: 5
+  m_Name: == Script ==
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1348332419
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348332418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2048505066}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1348332420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348332418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8da8db322feadc4e9a511e853c83ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorSlider: {fileID: 1873235184}
+  closeButton: {fileID: 1622197669}
+  panel: {fileID: 2048505065}
 --- !u!1 &1366595535
 GameObject:
   m_ObjectHideFlags: 0
@@ -4276,9 +4483,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543251}
-        m_TargetAssemblyTypeName: SailsManager, Assembly-CSharp
-        m_MethodName: DownSails
+      - m_Target: {fileID: 636614779}
+        m_TargetAssemblyTypeName: DownSailsManager, Assembly-CSharp
+        m_MethodName: DownSailsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4498,8 +4705,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543253}
-        m_TargetAssemblyTypeName: AnchorManager, Assembly-CSharp
+      - m_Target: {fileID: 1348332420}
+        m_TargetAssemblyTypeName: DownAnchorManager, Assembly-CSharp
         m_MethodName: CloseButton
         m_Mode: 1
         m_Arguments:
@@ -4683,10 +4890,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1696543250}
   - component: {fileID: 1696543252}
-  - component: {fileID: 1696543251}
-  - component: {fileID: 1696543253}
   m_Layer: 0
-  m_Name: Mini Games Manager
+  m_Name: Mouse Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4707,24 +4912,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1696543251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696543247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bb32689ae4b3f48bb799cadd5fd740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upProgressBar: {fileID: 1619388591}
-  downProgressBar: {fileID: 1737081357}
-  upCloseButton: {fileID: 941663478}
-  downCloseButton: {fileID: 1222076410}
-  upPanel: {fileID: 1724057682}
-  downPanel: {fileID: 1212225695}
 --- !u!114 &1696543252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4739,24 +4926,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannonCrosshair: {fileID: 1067373462}
   fishingHook: {fileID: 817029941}
---- !u!114 &1696543253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696543247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9622333631cb040b6bbd1798d76892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upAnchor: {fileID: 1670983302}
-  downAnchor: {fileID: 1873235184}
-  upCloseButton: {fileID: 295243110}
-  downCloseButton: {fileID: 1622197669}
-  upPanel: {fileID: 746102232}
-  downPanel: {fileID: 2048505065}
 --- !u!1 &1724057682
 GameObject:
   m_ObjectHideFlags: 0
@@ -4791,6 +4960,7 @@ RectTransform:
   - {fileID: 1918366222}
   - {fileID: 1619388592}
   - {fileID: 941663479}
+  - {fileID: 860680264}
   m_Father: {fileID: 1887758853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -5645,9 +5815,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1696543251}
-        m_TargetAssemblyTypeName: SailsManager, Assembly-CSharp
-        m_MethodName: UpSails
+      - m_Target: {fileID: 860680265}
+        m_TargetAssemblyTypeName: UpSailsManager, Assembly-CSharp
+        m_MethodName: UpSailsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5820,6 +5990,7 @@ RectTransform:
   - {fileID: 1502458721}
   - {fileID: 1873235183}
   - {fileID: 1622197670}
+  - {fileID: 1348332419}
   m_Father: {fileID: 1887758853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}

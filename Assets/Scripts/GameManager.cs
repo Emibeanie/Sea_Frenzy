@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-    
+
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(GAME_HAS_STARTED))
         {
             gameHasStarted = true;
