@@ -7,6 +7,14 @@ public class PlayerMovment : MonoBehaviourPun
     [SerializeField] Animator animator;
     /*[SerializeField] float runSpeed = 5f;*/
 
+    private void Start()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+    }
+
     void MovePlayer()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -25,6 +33,6 @@ public class PlayerMovment : MonoBehaviourPun
     {
         bool isWalking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
 
-        animator.SetBool("IsWalking", isWalking);
+        animator.SetBool("isWalking", isWalking);
     }
 }
