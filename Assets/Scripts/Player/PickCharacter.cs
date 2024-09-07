@@ -30,8 +30,6 @@ public class PickCharacter : MonoBehaviourPunCallbacks
                 player.gameObject.SetActive(false);
             }
         }
-       
-       
     }
 
     public void OnCharacterPicked(int buttonID)
@@ -54,6 +52,36 @@ public class PickCharacter : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
 
+        if (PhotonNetwork.IsConnected && PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isRejoining", out object isRejoining) && (bool)isRejoining)
+        {
+            // player is rejoining, no need to spawn a new player
+            pickCharacterPanel.SetActive(false);
+            GameManager.Instance.ship.SetActive(true);
+            charactersButtons[characterIndex].gameObject.SetActive(false);
+
+            if (buttonID == 1)
+            {
+                GameManager.Instance.ToggleCaptainBoard(true);
+            }
+            else
+            {
+                GameManager.Instance.ToggleCaptainBoard(false);
+            }
+
+            MiniGame[] MiniGamess = FindObjectsByType<MiniGame>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            PlayerSetup[] playerss = FindObjectsByType<PlayerSetup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach (var mini in MiniGamess)
+            {
+                mini.gameObject.SetActive(true);
+            }
+
+            foreach (var player in playerss)
+            {
+                player.gameObject.SetActive(true);
+            }
+            return;
+        }
 
         SpawnPlayer(PickResourcePlayerName(buttonID));
 
@@ -139,7 +167,7 @@ public class PickCharacter : MonoBehaviourPunCallbacks
         }
         else
         {
-            // For non-master clients, retrieve the current state
+            //for non-master clients, retrieve the current state
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("charactersState", out object chosenCharsObj))
             {
                 charactersState = (int[])chosenCharsObj;
