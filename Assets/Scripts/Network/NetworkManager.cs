@@ -3,14 +3,10 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
-
-    [SerializeField] TextMeshProUGUI lobbyErrorMessage;
-
     private Dictionary<string, Photon.Realtime.RoomInfo> _cachedRoomList = new();
 
     UIManager _uiManager;
@@ -20,6 +16,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
+
         lastRoomName = PlayerPrefs.GetString("LastRoomNickName", "");
     }
 
@@ -27,7 +24,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         _uiManager = UIManager.Instance;
         _uiManager.ToggleConnectingMassage(true);
-
+        
         if (PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
         {
             PhotonNetwork.JoinLobby(mainLobby); // Join the lobby if connected but not in the lobby
@@ -44,6 +41,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
         _uiManager.ToggleConnectingMassage(false);
         _uiManager.ToggleCreateRoomPanel(false);
         _uiManager.ToggleMainLobbyPannel(false);
@@ -53,6 +51,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _uiManager.ToggleNickNamePanel(true);
 
         Debug.Log("You are connected to the master server");
+
         PhotonNetwork.JoinLobby(mainLobby);
     }
 
@@ -92,6 +91,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private IEnumerator TryReconnecting()
     {
         PhotonNetwork.ReconnectAndRejoin();
+
         yield return new WaitForSeconds(.5f);
 
         if (PhotonNetwork.IsConnected)
@@ -104,6 +104,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1f);
             StartCoroutine(TryReconnecting());
         }
+
+        yield return null;
     }
 
     public override void OnRoomListUpdate(List<Photon.Realtime.RoomInfo> roomList)
@@ -116,7 +118,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             else
             {
-
                 _cachedRoomList[room.Name] = room;
             }
         }
@@ -150,27 +151,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RejoinRoom(lastRoomName);
     }
 
-    public void JoinRandomRoom(bool joinOngoingGame)
+    public void JoinRandomRoom()
     {
-        List<Photon.Realtime.RoomInfo> suitableRooms = new List<Photon.Realtime.RoomInfo>();
-
-        foreach (var roomInfo in _cachedRoomList.Values)
-        {
-            if (roomInfo.PlayerCount < roomInfo.MaxPlayers)
-            {
-                suitableRooms.Add(roomInfo);
-            }
-        }
-
-        if (suitableRooms.Count > 0)
-        {
-            Photon.Realtime.RoomInfo randomRoom = suitableRooms[Random.Range(0, suitableRooms.Count)];
-            PhotonNetwork.JoinRoom(randomRoom.Name);
-        }
-        else
-        {
-            lobbyErrorMessage.gameObject.SetActive(true);
-            lobbyErrorMessage.text = "No suitable rooms found";
-        }
+        PhotonNetwork.JoinRandomRoom();
     }
 }

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MiniGameSpawner : MonoBehaviour
+public class MiniGameSpawner : MonoBehaviourPun
 {
     static public MiniGameSpawner Instance;
+
+    int miniGameCurrentStation;
 
     [Header("Object Spawn")]
     public List<MiniGamePanel> miniGamesPanelsList = new List<MiniGamePanel>();
@@ -17,8 +19,8 @@ public class MiniGameSpawner : MonoBehaviour
     private int nextSpawnIndex;
     float spawnTime;
 
-    int[] currentSpawns = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; // -1 means there is no spawn at the station, 1 means mini game has spawned at that location.
-
+    int[] currentSpawns = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; 
+    // -1 means there is no spawn at the station, 1 means mini game has spawned at that location.
     private void Awake()
     {
         Instance = this;
@@ -29,7 +31,7 @@ public class MiniGameSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        ConvertToDictionary();
+        ConvertListToDictionary();
         yield return null;
     }
 
@@ -53,6 +55,8 @@ public class MiniGameSpawner : MonoBehaviour
     {
         nextSpawnIndex = UnityEngine.Random.Range(0, currentSpawns.Length);
 
+        bool miniGameSlotIsEmpty = currentSpawns[nextSpawnIndex] == -1;
+
         if (currentSpawns[nextSpawnIndex] != -1)
         {
             yield return new WaitForSeconds(0.1f);
@@ -65,24 +69,22 @@ public class MiniGameSpawner : MonoBehaviour
         yield return new WaitForSeconds(time);
         if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.IsMasterClient)
         {
+            
             switch (nextSpawnIndex)
             {
-                case 0:
-                case 2:
-                case 3:
-                case 4:
+                case 0:case 2: case 3: case 4:
 
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Fisher");
                         Debug.Log("Fishing Mini Game has been spawned");
                     }
                     break;
 
-                case 5:
-                case 6:
+                case 5: case 6:
 
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Canon ");
                         Debug.Log("Canon Mini Game has been spawned");
@@ -91,7 +93,7 @@ public class MiniGameSpawner : MonoBehaviour
 
                 case 1:
 
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Anchor Up");
                         Debug.Log("Anchor Up Mini Game has been spawned");
@@ -99,7 +101,7 @@ public class MiniGameSpawner : MonoBehaviour
                     break;
 
                 case 9:
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Anchor Down");
                         Debug.Log("Anchor Down Mini Game has been spawned");
@@ -108,7 +110,7 @@ public class MiniGameSpawner : MonoBehaviour
 
                 case 7:
 
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Sails Up");
                         Debug.Log("Sails Up Mini Game has been spawned");
@@ -116,7 +118,7 @@ public class MiniGameSpawner : MonoBehaviour
                     break;
 
                 case 8:
-                    if (currentSpawns[nextSpawnIndex] == -1)
+                    if (miniGameSlotIsEmpty)
                     {
                         SpawnMiniGame("Sails Down");
                         Debug.Log("Sails Down Mini Game has been spawned");
@@ -133,25 +135,23 @@ public class MiniGameSpawner : MonoBehaviour
     private void SpawnMiniGame(string miniGameID)
     {
 
-        GameObject triangleScoreClone = PhotonNetwork.InstantiateRoomObject(
+        GameObject triangleScoreClone = PhotonNetwork.Instantiate(
             "Bonus Score",
             spawnPoints[nextSpawnIndex].position,
             Quaternion.identity
         );
 
-
         MiniGame miniGameComponent = triangleScoreClone.GetComponent<MiniGame>();
 
-        miniGameComponent.InisilaizeMiniGame(miniGameID);
+        miniGameComponent.InisilaizeMiniGame(miniGameID, nextSpawnIndex);
 
         triangleScoreClone.transform.SetParent(GameManager.Instance.ship.transform, true);
 
-        miniGameComponent.SetMiniGameCurrentStation(nextSpawnIndex);
-
+        Debug.Log("Mini Game Current Station: " + miniGameCurrentStation);
         currentSpawns[nextSpawnIndex] = 1;
     }
 
-    private void ConvertToDictionary()
+    private void ConvertListToDictionary()
     {
         miniGamesPanels = new Dictionary<string, GameObject>();
         foreach (var item in miniGamesPanelsList)
@@ -175,5 +175,23 @@ public class MiniGameSpawner : MonoBehaviour
                 Debug.LogError("Panel for MiniGameID " + miniGameID + " is null!");
             }
         }
+    }
+
+    public int GetMiniGameCurrentStation()
+    {
+        return miniGameCurrentStation;
+    }
+
+    [PunRPC]
+    public void InformMasterToClearMiniGame(int miniGameStationID)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Clearing mini-game at station: " + miniGameStationID);
+            clearMininGame(miniGameStationID);
+        }
+
+         
+
     }
 }

@@ -1,53 +1,80 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Photon.Pun;
+using UnityEngine.PlayerLoop;
 
-public class FishManager : MonoBehaviour
+public class FishManager : MonoBehaviourPun
 {
-    [SerializeField] TMP_Text fishCounterText;
-    [SerializeField] FishSpawner fishSpawner;
-    [SerializeField] FishPool fishPool;
-    [SerializeField] GameObject fishingPanel;
+    [SerializeField] private GameObject fishingPanel;
     [SerializeField] GameObject closeButton;
-
+    [SerializeField] GameObject[] fishes;
+        
     public static FishManager Instance { get; private set; }
 
-    private int _fishCount = 0;
-
-    private void OnEnable()
-    {
-        ResetMiniGame();
-    }
-
-    private void ResetMiniGame()
-    {
-        _fishCount = 0;
-        fishCounterText.text = $"Fish Caught: {_fishCount}/{fishSpawner.FishSpawnLimit}";
-
-        fishPool.ResetPool();
-        fishSpawner.ResetSpawner();
-
-        closeButton.SetActive(false);
-    }
     private void Awake()
     {
         Instance = this;
+        ResetMiniGame();
+    }
+
+    void ResetMiniGame()
+    {
+        foreach(GameObject fish in fishes)
+        {
+            fish.SetActive(true);
+        }
+
+        closeButton.SetActive(false);
     }
 
     private void Update()
     {
-        if (_fishCount == fishSpawner.FishSpawnLimit)
-            closeButton.SetActive(true);
+        CheckFishAndPanel();
     }
 
-    public void AddFish()
+    private void CheckFishAndPanel()
     {
-        _fishCount++;
-        fishCounterText.text = $"Fish Caught: {_fishCount}/{fishSpawner.FishSpawnLimit}";
+        if (fishingPanel.activeSelf)
+        {
+            bool allFishesInactive = true;
+            foreach (GameObject fish in fishes)
+            {
+                if (fish.activeSelf)
+                {
+                    allFishesInactive = false;
+                    break;
+                }
+            }
+
+            if (allFishesInactive)
+                closeButton.SetActive(true);
+        }
     }
 
     public void ClosePanel()
     {
-        fishingPanel.SetActive(false);
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("playerViewID"))
+        {
+            int playerViewID = (int)PhotonNetwork.LocalPlayer.CustomProperties["playerViewID"];
+
+            PlayerSetup player = PhotonNetwork.GetPhotonView(playerViewID).GetComponent<PlayerSetup>();
+
+            player.ActiveOwnerControl();
+
+            GameManager.Instance.AddTeamScore();
+
+            photonView.RPC("InformMasterToClearMiniGame", RpcTarget.MasterClient, player.GetMiniGameSpawnerObject().GetComponent<MiniGame>().MiniGameCurrentStation);
+
+            fishingPanel.SetActive(false);
+
+            ResetMiniGame();
+
+            PhotonNetwork.Destroy(player.GetMiniGameSpawnerObject());
+        }
+        else
+        {
+            Debug.LogError("playerViewID not found in custom properties!");
+        }
     }
 }

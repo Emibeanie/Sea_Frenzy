@@ -1,16 +1,12 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DownAnchorManager : MonoBehaviour
+public class DownAnchorManager : MonoBehaviourPun
 {
     [SerializeField] Slider anchorSlider;
     [SerializeField] GameObject closeButton;
     [SerializeField] GameObject panel;
-
-    private void OnEnable()
-    {
-        ResetMiniGame();
-    }
 
     private void ResetMiniGame()
     {
@@ -49,6 +45,28 @@ public class DownAnchorManager : MonoBehaviour
 
     public void CloseButton()
     {
-        panel.SetActive(false);
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("playerViewID"))
+        {
+            int playerViewID = (int)PhotonNetwork.LocalPlayer.CustomProperties["playerViewID"];
+
+            PlayerSetup player = PhotonNetwork.GetPhotonView(playerViewID).GetComponent<PlayerSetup>();
+
+            panel.SetActive(false);
+
+            player.ActiveOwnerControl();
+
+            GameManager.Instance.AddTeamScore();
+
+            photonView.RPC("InformMasterToClearMiniGame", RpcTarget.MasterClient, player.GetMiniGameSpawnerObject().GetComponent<MiniGame>().MiniGameCurrentStation);
+
+            ResetMiniGame();
+
+            PhotonNetwork.Destroy(player.GetMiniGameSpawnerObject());
+        }
+        else
+        {
+            Debug.LogError("playerViewID not found in custom properties!");
+        }
     }
 }
+

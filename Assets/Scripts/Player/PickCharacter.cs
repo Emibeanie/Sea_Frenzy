@@ -1,7 +1,7 @@
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
+using ExitGames.Client.Photon;
 
 public class PickCharacter : MonoBehaviourPunCallbacks
 {
@@ -11,14 +11,14 @@ public class PickCharacter : MonoBehaviourPunCallbacks
     [SerializeField] MiniGameSpawner miniGameSpawner;
     private int[] charactersState = { -1, -1, -1, -1, -1, -1 };
 
-    public void TogglePickCharacterPanel(bool status)
+    public void TogglePickCharacterPanel(bool IsTrue)
     {
         MiniGame[] MiniGames = FindObjectsByType<MiniGame>(FindObjectsSortMode.None);
         PlayerSetup[] players = FindObjectsByType<PlayerSetup>(FindObjectsSortMode.None);
 
-        pickCharacterPanel.SetActive(status);
+        pickCharacterPanel.SetActive(IsTrue);
 
-        if (status)
+        if (IsTrue)
         {  
             foreach (var mini in MiniGames)
             {
@@ -45,43 +45,13 @@ public class PickCharacter : MonoBehaviourPunCallbacks
 
         charactersState[characterIndex] = buttonID;
 
-        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
+        Hashtable CharacterState = new Hashtable
         {
             {"charactersState", charactersState}
         };
 
-        PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(CharacterState);
 
-        if (PhotonNetwork.IsConnected && PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isRejoining", out object isRejoining) && (bool)isRejoining)
-        {
-            // player is rejoining, no need to spawn a new player
-            pickCharacterPanel.SetActive(false);
-            GameManager.Instance.ship.SetActive(true);
-            charactersButtons[characterIndex].gameObject.SetActive(false);
-
-            if (buttonID == 1)
-            {
-                GameManager.Instance.ToggleCaptainBoard(true);
-            }
-            else
-            {
-                GameManager.Instance.ToggleCaptainBoard(false);
-            }
-
-            MiniGame[] MiniGamess = FindObjectsByType<MiniGame>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            PlayerSetup[] playerss = FindObjectsByType<PlayerSetup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-            foreach (var mini in MiniGamess)
-            {
-                mini.gameObject.SetActive(true);
-            }
-
-            foreach (var player in playerss)
-            {
-                player.gameObject.SetActive(true);
-            }
-            return;
-        }
 
         SpawnPlayer(PickResourcePlayerName(buttonID));
 
@@ -111,6 +81,8 @@ public class PickCharacter : MonoBehaviourPunCallbacks
             player.gameObject.SetActive(true);
         }
 
+        GameManager.Instance.ToggleStatsPanels();
+
     }
 
 
@@ -139,12 +111,34 @@ public class PickCharacter : MonoBehaviourPunCallbacks
         int randomSpawnIndex = UnityEngine.Random.Range(0, miniGameSpawner.spawnPoints.Length);
 
         GameObject myPlayer = PhotonNetwork.Instantiate(resourcePlayerName, miniGameSpawner.spawnPoints[randomSpawnIndex].position, Quaternion.identity);
-        myPlayer.transform.SetParent(GameManager.Instance.ship.transform, true); 
         PlayerSetup playerSetup = myPlayer.GetComponent<PlayerSetup>();
 
-        playerSetup.InitializePlayer(myPlayer ,PhotonNetwork.LocalPlayer.NickName, resourcePlayerName);
+        if (resourcePlayerName == "Captain")
+        {
+            // Ensure the player (Captain) owns the PhotonView
+            if (photonView != null && photonView.IsMine)
+            {
+                Debug.Log("Captain owns the PhotonView.");
+            }
+        }
+        myPlayer.transform.SetParent(GameManager.Instance.ship.transform, true); 
 
-        PlayerPrefs.SetInt("playerViewID", playerSetup.PlayerViewID);
+        playerSetup.InitializePlayer(myPlayer ,PhotonNetwork.LocalPlayer.NickName);
+
+        int playerViewID = playerSetup.photonView.ViewID;
+
+        Hashtable SaveViewID = new Hashtable
+        {
+            {"playerViewID", playerViewID }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(SaveViewID);
+
+
+        Hashtable SaveMiniGameID = new Hashtable
+        {
+            {"playerMiniID", resourcePlayerName}
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(SaveMiniGameID);
 
         playerSetup.ActiveOwnerControl();
 
@@ -167,7 +161,7 @@ public class PickCharacter : MonoBehaviourPunCallbacks
         }
         else
         {
-            //for non-master clients, retrieve the current state
+            // For non-master clients, retrieve the current state
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("charactersState", out object chosenCharsObj))
             {
                 charactersState = (int[])chosenCharsObj;
@@ -175,7 +169,7 @@ public class PickCharacter : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         if (propertiesThatChanged.TryGetValue("charactersState", out object chosenCharsObj))
         {
