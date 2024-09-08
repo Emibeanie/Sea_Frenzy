@@ -46,7 +46,12 @@ public class RejoinManager : MonoBehaviourPunCallbacks
                 player.ActiveOwnerControl();
                 _gameManager._roomMenu.ToggleRoomMenu(false);
                 _gameManager.ship.SetActive(true);
-                GameManager.Instance.ToggleStatsPanels();
+                GameManager.Instance.ToggleStatsPanels(true);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameManager.Instance.ToggleStationPanels(true);
+                }
             }
         }
         yield return null;

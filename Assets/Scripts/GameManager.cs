@@ -96,10 +96,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void ToggleStatsPanels()
+    public void ToggleStationPanels(bool Isactive)
     {
-        statsPanel.SetActive(true);
-        stationPanel.SetActive(true);
+        stationPanel.SetActive(Isactive);
+
+    }
+    public void ToggleStatsPanels(bool ISactive)
+    {
+        statsPanel.SetActive(ISactive);
+
     }
 
     private void Update()
