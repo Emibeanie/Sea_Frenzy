@@ -81,8 +81,12 @@ public class PickCharacter : MonoBehaviourPunCallbacks
             player.gameObject.SetActive(true);
         }
 
-        GameManager.Instance.ToggleStatsPanels();
+        GameManager.Instance.ToggleStatsPanels(true);
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameManager.Instance.ToggleStationPanels(true); 
+        }
     }
 
 
