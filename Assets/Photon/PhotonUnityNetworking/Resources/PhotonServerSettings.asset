@@ -49,8 +49,11 @@ MonoBehaviour:
   - SpawnMiniGameRPC
   - InisilaizeMiniGame
   - AssignMiniGameID
-  - UpdatePlayerDataRPC
-  - UpdatePlayerPosition
+  - RequestOwnershipFromMaster
+  - InformMasterToClearMiniGame
+  - PlayWalkingAimation
+  - PlayWalkingAnimation
+  - ReceivePlayerData
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

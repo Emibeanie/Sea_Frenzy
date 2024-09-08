@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FishSpawner : MonoBehaviour
 {
-    [SerializeField] FishPool fishPool;
-    [SerializeField] RectTransform panelRectTransform;
-    [SerializeField] float spawnInterval = 2.0f;
+    [SerializeField] private FishPool fishPool;
+    [SerializeField] private RectTransform panelRectTransform;
+    [SerializeField] private float spawnInterval = 2.0f;
 
     public int FishSpawnLimit { get => _fishSpawnLimit; }
 
@@ -17,25 +17,11 @@ public class FishSpawner : MonoBehaviour
     private int iterationLimit = 100;
     private int iterationCount = 0;
 
-    void OnEnable()
-    {
-        InitializeSpawner();
-    }
-
-    void InitializeSpawner()
+    void Start()
     {
         _gridCells = new Dictionary<Vector2Int, List<RectTransform>>();
         _fishSpawnLimit = Random.Range(18, 28);
-        _fishCount = 0;
         InvokeRepeating("SpawnFish", 0, spawnInterval);
-    }
-
-    public void ResetSpawner()
-    {
-        CancelInvoke("SpawnFish");
-        _gridCells.Clear();
-        _fishCount = 0;
-        InitializeSpawner();
     }
 
     void SpawnFish()

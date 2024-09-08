@@ -12,14 +12,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [NonSerialized]
     public const string GAME_HAS_STARTED = "gameHasStarted";
-    private const string TEAM_SCORE = "teamScore";
+    public const string TEAM_SCORE = "teamScore";
 
     [SerializeField] public GameObject ship;
 
     [Header("Score")]
-    private int teamScore = 0;
+
     [SerializeField] int score = 5;
-    [SerializeField] TextMeshProUGUI teamBounsText;
+    [SerializeField] TextMeshProUGUI teamScoreText;
+    private int teamScore = 0;
 
     [Header("In Room Menu")]
     [SerializeField] public RoomMenu _roomMenu;
@@ -42,6 +43,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("Captain Board")]
     [SerializeField] GameObject captainBoard;
 
+    [Header("Game Stats Panel")]
+    [SerializeField] GameObject statsPanel;
+    [SerializeField] GameObject stationPanel;
+    
     public bool gameHasStarted { get; private set; }
 
     private bool isLeavingRoom = false;
@@ -52,20 +57,27 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
-        tempTimer = 60; // have to be greater then 0 to prevent the game from ending in case of rejoining the room.
+        tempTimer = 60; // have to be greater then 0 to prevent the game from ending in case of rejoining the room
     }
 
     private void Start()
     {
-
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(GAME_HAS_STARTED))
         {
             gameHasStarted = true;
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(TEAM_SCORE))
+            {
+                teamScore = (int)PhotonNetwork.CurrentRoom.CustomProperties[TEAM_SCORE];
+                teamScoreText.text = $"Team Score: {teamScore}";
+            }
         }
 
         if (!gameHasStarted)
         {
-            gameTimer = PlayerPrefs.GetFloat("GameTimeLimit", 5) * 60; // convert it to minutes.
+            gameTimer = PlayerPrefs.GetFloat("GameTimeLimit", 5) * 60; // convert it to minutes
+            statsPanel.SetActive(false);
+            stationPanel.SetActive(false);
             _roomMenu.ToggleRoomMenu(true);
         }
 
@@ -80,43 +92,55 @@ public class GameManager : MonoBehaviourPunCallbacks
             StartCoroutine(rejoinManager.InitializeRejoin());
             _roomMenu.ToggleRoomMenu(false);
             ship.SetActive(true);
+           
         }
+    }
+
+    public void ToggleStatsPanels()
+    {
+        statsPanel.SetActive(true);
+        stationPanel.SetActive(true);
     }
 
     private void Update()
     {
         if (gameHasStarted)
         {
-            if (PhotonNetwork.IsMasterClient)
+            GameTimerLogic();
+        }
+    }
+
+    private void GameTimerLogic()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (gameTimer > 0)
             {
-                if (gameTimer > 0)
+                gameTimer -= Time.deltaTime;
+
+                tempTimer = (int)gameTimer;
+
+                if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
                 {
-                    gameTimer -= Time.deltaTime;
-
-                    tempTimer = (int)gameTimer;
-
-                    if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
-                    {
-                        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
+                    ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
                          {
                             {"GameTimer", tempTimer}
                          };
 
-                        PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
-                    }
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
                 }
             }
+        }
 
-            if (tempTimer <= 0)
+        if (tempTimer <= 0)
+        {
+            ship.SetActive(false);
+            fishCollectedText.text = $"Score Collected: {teamScore}";
+            endGamePanel.SetActive(true);
+
+            if (PhotonNetwork.IsMasterClient)
             {
-                ship.SetActive(false);
-                fishCollectedText.text = $"Score Collected: {teamScore}";
-                endGamePanel.SetActive(true);
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    endGameButton.gameObject.SetActive(true);
-                }
+                endGameButton.gameObject.SetActive(true);
             }
         }
     }
@@ -126,6 +150,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log($"Joined to room named: {PhotonNetwork.CurrentRoom.Name}");
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(TEAM_SCORE))
+        {
+            teamScore = (int)PhotonNetwork.CurrentRoom.CustomProperties[TEAM_SCORE];
+            teamScoreText.text = $"Team Score: {teamScore}";
+        }
 
         if (gameHasStarted)
         {
@@ -141,7 +171,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(TEAM_SCORE))
         {
             teamScore = (int)PhotonNetwork.CurrentRoom.CustomProperties[TEAM_SCORE];
-            teamBounsText.text = $"Team Score: {teamScore}";
+            teamScoreText.text = $"Team Score: {teamScore}";
         }
 
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("GameTimer"))
@@ -161,7 +191,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            _miniGameSpawner.SpawnNewMiniGame(); // spawning score currently
+            _miniGameSpawner.SpawnNewMiniGame(); 
             _miniGameSpawner.DisplayNextMiniGameSpawnStation();
         }
     }
@@ -172,12 +202,18 @@ public class GameManager : MonoBehaviourPunCallbacks
             tempTimer = (int)chosenCharsObj;
             gameTimerText.text = $"Time left : {tempTimer}s";
         }
+
+        if (propertiesThatChanged.TryGetValue(TEAM_SCORE, out object score))
+        {
+            teamScore = (int)score;
+            teamScoreText.text = $"Team Score: {teamScore}";
+        }
     }
 
     public void AddTeamScore()
     {
         teamScore += score;
-        teamBounsText.text = $"Team Score: {teamScore}";
+        teamScoreText.text = $"Team Score: {teamScore}";
 
         ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable
         {

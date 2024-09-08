@@ -13,7 +13,7 @@ public class FishBehavior : MonoBehaviour
 
     private void OnFishClicked()
     {
-        FishManager.Instance.AddFish();
+       
         gameObject.SetActive(false);
     }
 }

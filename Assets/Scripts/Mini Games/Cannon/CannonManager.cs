@@ -1,17 +1,13 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class CannonManager : MonoBehaviour
+public class CannonManager : MonoBehaviourPun
 {
     [SerializeField] GameObject cannonPanel;
     [SerializeField] GameObject closeButton;
     [SerializeField] GameObject[] rocks;
 
-    private void OnEnable()
-    {
-        ResetMiniGame();
-    }
-
-    private void ResetMiniGame()
+    void ResetMiniGame()
     {
         foreach (GameObject rock in rocks)
         {
@@ -47,6 +43,27 @@ public class CannonManager : MonoBehaviour
 
     public void CloseButton()
     {
-        cannonPanel.SetActive(false);
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("playerViewID"))
+        {
+            int playerViewID = (int)PhotonNetwork.LocalPlayer.CustomProperties["playerViewID"];
+
+            PlayerSetup player = PhotonNetwork.GetPhotonView(playerViewID).GetComponent<PlayerSetup>();
+
+            cannonPanel.SetActive(false);
+
+            player.ActiveOwnerControl();
+
+            GameManager.Instance.AddTeamScore();
+
+            photonView.RPC("InformMasterToClearMiniGame", RpcTarget.MasterClient, player.GetMiniGameSpawnerObject().GetComponent<MiniGame>().MiniGameCurrentStation);
+
+            ResetMiniGame();
+
+            PhotonNetwork.Destroy(player.GetMiniGameSpawnerObject());
+        }
+        else
+        {
+            Debug.LogError("playerViewID not found in custom properties!");
+        }
     }
 }

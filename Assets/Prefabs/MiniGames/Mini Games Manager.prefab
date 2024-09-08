@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8733503153612589008
+--- !u!1 &7347479035101918008
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8467610722223106156}
-  - component: {fileID: 5630900977713057545}
-  - component: {fileID: 2298144156188760247}
+  - component: {fileID: 5316759621933180303}
+  - component: {fileID: 317048548802887026}
+  - component: {fileID: 3689811610630374833}
+  - component: {fileID: 8669110060720239653}
+  - component: {fileID: 5593378647149130719}
+  - component: {fileID: 609653123547767099}
+  - component: {fileID: 2404867921280112944}
+  - component: {fileID: 3782136469361900420}
   m_Layer: 0
   m_Name: Mini Games Manager
   m_TagString: Untagged
@@ -18,13 +23,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8467610722223106156
+--- !u!4 &5316759621933180303
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8733503153612589008}
+  m_GameObject: {fileID: 7347479035101918008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 579.69794, y: 235.60852, z: 2.0548437}
@@ -33,27 +38,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5630900977713057545
+--- !u!114 &317048548802887026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8733503153612589008}
+  m_GameObject: {fileID: 7347479035101918008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bb32689ae4b3f48bb799cadd5fd740, type: 3}
+  m_Script: {fileID: 11500000, guid: 46ce9757579edcd459012ac940dc2806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upProgressBar: {fileID: 0}
-  downProgressBar: {fileID: 0}
---- !u!114 &2298144156188760247
+  miniGamesPanelsList:
+  - miniGameId: Fisher
+    panel: {fileID: 0}
+  - miniGameId: Sails Up
+    panel: {fileID: 0}
+  - miniGameId: Sails Down
+    panel: {fileID: 0}
+  - miniGameId: 'Canon '
+    panel: {fileID: 0}
+  - miniGameId: Anchor Up
+    panel: {fileID: 0}
+  - miniGameId: Anchor Down
+    panel: {fileID: 0}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  nextSpawnPlaceText: {fileID: 0}
+--- !u!114 &3689811610630374833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8733503153612589008}
+  m_GameObject: {fileID: 7347479035101918008}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f0c455e4a075f94ab150015c51ff8e8, type: 3}
@@ -61,3 +89,95 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannonCrosshair: {fileID: 0}
   fishingHook: {fileID: 0}
+--- !u!114 &8669110060720239653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347479035101918008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5593378647149130719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347479035101918008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1bb32689ae4b3f48bb799cadd5fd740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upProgressBar: {fileID: 0}
+  downProgressBar: {fileID: 0}
+  upCloseButton: {fileID: 0}
+  downCloseButton: {fileID: 0}
+  upPanel: {fileID: 0}
+  downPanel: {fileID: 0}
+--- !u!114 &609653123547767099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347479035101918008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9622333631cb040b6bbd1798d76892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upAnchor: {fileID: 0}
+  downAnchor: {fileID: 0}
+  upCloseButton: {fileID: 0}
+  downCloseButton: {fileID: 0}
+  upPanel: {fileID: 0}
+  downPanel: {fileID: 0}
+--- !u!114 &2404867921280112944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347479035101918008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757e47f4647e2de41bd2b0f0a5eb75cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishCounterText: {fileID: 0}
+  fishSpawner: {fileID: 0}
+  fishingPanel: {fileID: 0}
+  closeButton: {fileID: 0}
+--- !u!114 &3782136469361900420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347479035101918008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96dfe15c36e1da04b8a996713dbaa226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonPanel: {fileID: 0}
+  closeButton: {fileID: 0}
+  rocks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

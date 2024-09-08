@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using WebSocketSharp;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -198,14 +197,10 @@ public class UIManager : MonoBehaviour
             roomInfo.SetRoomInfo(room.Value.Name, room.Value.PlayerCount, room.Value.MaxPlayers);
         }
     }
-   
-    public void OnJoinRandomRoom()
-    {
-        NetworkManager.Instance.JoinRandomRoom(true);
-    }
 
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("NeedsRejoin", 0);
+        PlayerPrefs.DeleteAll();
     }
 }
